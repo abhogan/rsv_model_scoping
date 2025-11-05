@@ -98,7 +98,25 @@ ggsave("main_plot.png", x, height = 17, width = 30, units = c("cm"))
 
 # Values for paper text
 
+# Abstract
+
 # impact in children 0-3 months : maternal
+
+x <- dat %>%
+  filter(month_lower %in% c(0,1,2),
+         month_upper %in% c(1,2,3)) %>%
+  filter(type == "maternal",
+         name == "averted per 1000")
+max(x$value)
+min(x$value)
+
+x <- dat %>%
+  filter(month_lower %in% c(0,1,2),
+         month_upper %in% c(1,2,3)) %>%
+  filter(type == "monoclonal",
+         name == "averted per 1000")
+max(x$value)
+min(x$value)
 
 x <- dat %>%
   filter(month_lower %in% c(0,1,2),
@@ -108,7 +126,37 @@ x <- dat %>%
 max(x$value)
 min(x$value)
 
+x <- dat %>%
+  filter(month_lower %in% c(0,1,2),
+         month_upper %in% c(1,2,3)) %>%
+  filter(type == "monoclonal",
+         name == "percentage reduction")
+max(x$value)
+min(x$value)
+
+# Results section
+
 # impact in children 0-3 months : maternal, year-round
+
+x <- dat %>%
+  filter(month_lower %in% c(0,1,2),
+         month_upper %in% c(1,2,3)) %>%
+  filter(type == "maternal",
+         name == "averted per 1000",
+         strategy == "year-round")
+max(x$value)
+min(x$value)
+median(x$value)
+
+x <- dat %>%
+  filter(month_lower %in% c(3,4,5),
+         month_upper %in% c(4,5,6)) %>%
+  filter(type == "maternal",
+         name == "averted per 1000",
+         strategy == "year-round")
+max(x$value)
+min(x$value)
+median(x$value)
 
 x <- dat %>%
   filter(month_lower %in% c(0,1,2),
@@ -118,16 +166,39 @@ x <- dat %>%
          strategy == "year-round")
 max(x$value)
 min(x$value)
+median(x$value)
 
+x <- dat %>%
+  filter(month_lower %in% c(3,4,5),
+         month_upper %in% c(4,5,6)) %>%
+  filter(type == "maternal",
+         name == "percentage reduction",
+         strategy == "year-round")
+max(x$value)
+min(x$value)
+median(x$value)
 
+##################################################
 y <- dat %>%
   filter(month_lower %in% c(0,1,2),
          month_upper %in% c(1,2,3)) %>%
-  filter(type == "monoclonal",
-         name == "percentage reduction")
+  filter(type == "maternal",
+         name == "averted per 1000",
+         strategy == "seasonal")
 
 max(y$value)
 min(y$value)
+
+y <- dat %>%
+  filter(month_lower %in% c(3,4,5),
+         month_upper %in% c(4,5,6)) %>%
+  filter(type == "maternal",
+         name == "averted per 1000",
+         strategy != "year-round")
+
+max(y$value)
+min(y$value)
+median(y$value)
 
 x <- dat %>%
   filter(month_lower %in% c(0,1,2),
@@ -137,13 +208,14 @@ x <- dat %>%
 max(x$value)
 min(x$value)
 
-###
+##################################################
 # main results
 x <- dat %>%
   filter(month_lower %in% c(0,1,2),
          month_upper %in% c(1,2,3)) %>%
   filter(type == "monoclonal",
-         name == "percentage reduction")
+         name != "percentage reduction",
+         strategy != "year-round")
 median(x$value)
 max(x$value)
 min(x$value)
@@ -152,10 +224,56 @@ x <- dat %>%
   filter(month_lower %in% c(0,1,2),
          month_upper %in% c(1,2,3)) %>%
   filter(type == "monoclonal",
+         name == "percentage reduction",
+         strategy != "year-round")
+median(x$value)
+max(x$value)
+min(x$value)
+
+
+x <- dat %>%
+  filter(month_lower %in% c(3,4,5),
+         month_upper %in% c(4,5,6)) %>%
+  filter(type == "monoclonal",
+         name != "percentage reduction",
+         strategy != "year-round")
+median(x$value)
+max(x$value)
+min(x$value)
+
+x <- dat %>%
+  filter(month_lower %in% c(3,4,5),
+         month_upper %in% c(4,5,6)) %>%
+  filter(type == "monoclonal",
+         name == "percentage reduction",
+         strategy != "year-round")
+median(x$value)
+max(x$value)
+min(x$value)
+
+
+
+x <- dat %>%
+  filter(month_lower %in% c(0,1,2),
+         month_upper %in% c(1,2,3)) %>%
+  filter(type == "monoclonal",
+         strategy == "year-round",
          name == "averted per 1000")
 median(x$value)
 max(x$value)
 min(x$value)
+
+x <- dat %>%
+  filter(month_lower %in% c(3,4,5),
+         month_upper %in% c(4,5,6)) %>%
+  filter(type == "monoclonal",
+         strategy == "year-round",
+         name == "averted per 1000")
+median(x$value)
+max(x$value)
+min(x$value)
+
+
 
 x <- dat %>%
   filter(month_lower %in% c(3,4,5),
