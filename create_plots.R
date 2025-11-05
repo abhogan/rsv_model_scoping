@@ -19,28 +19,12 @@ dat <- read_csv("data.csv") %>%
          study = paste0(author, " ", year, " ", strategy),
          paper = paste0(author, " ", year)) %>%
   pivot_longer(cols = c(`averted per 1000`, `percentage reduction`)) %>%
-  mutate(group = paste0(study, scenario))
+  mutate(group = paste0(paper, ", coverage ", coverage))
 
 head(dat)
 
-ggplot(data = dat, aes(x=month, y = value, col = paper, group = group, linetype = strategy)) +
-  geom_line() +
-  geom_point() +
-  labs(x = "age (months)", linetype = "strategy", col = "study") +
-  facet_wrap(type~name, scales = "free") +
-  th +
-  scale_color_manual(values = study_cols)+
-  scale_linetype_manual(values = c(3,2,1)) +
-  scale_x_continuous(breaks = c(0,6,12,18,24), limits = c(0,24))
-
-ggsave("main_plot.png", height = 8, width = 10)
-
-
 ###########
 # aligned axes plots
-
-dat <- dat %>%
-  mutate(group = paste0(paper, ", coverage ", coverage))
 
 dat_mat1 <- dat %>%
   filter(type == "maternal",
@@ -64,7 +48,7 @@ p1 <- ggplot(data = dat_mat1, aes(x=month, y = value, col = group, linetype = st
 p2 <- ggplot(data = dat_mat2, aes(x=month, y = value, col = group, linetype = strategy)) +
   geom_line() +
   geom_point() +
-  labs(x = "age (months)", linetype = "strategy", col = "study", y = "percentage reduction") +
+  labs(x = "age (months)", linetype = "strategy", col = "study", y = "percentage reduction (%)") +
   facet_wrap(~type, scales = "free") +
   th +
   scale_color_manual(values = c(study_cols[1:4],study_cols[7]))+
@@ -94,7 +78,7 @@ p3 <- ggplot(data = dat_mono1, aes(x=month, y = value, col = group, linetype = s
 p4 <- ggplot(data = dat_mono2, aes(x=month, y = value, col = group, linetype = strategy)) +
   geom_line() +
   geom_point() +
-  labs(x = "age (months)", linetype = "strategy", col = "study", y = "percentage reduction") +
+  labs(x = "age (months)", linetype = "strategy", col = "study", y = "percentage reduction (%)") +
   facet_wrap(~type, scales = "free") +
   th +
   scale_color_manual(values = c(study_cols[1:2],study_cols[4:7]))+
@@ -108,10 +92,12 @@ p6 <- ggarrange(p3, p4, ncol = 2, common.legend = TRUE, legend = "right", labels
 
 x <- ggarrange(p5, p6, nrow = 2)
 x
-ggsave("main_plot2.png", x, height = 17, width = 30, units = c("cm"))
+ggsave("main_plot.png", x, height = 17, width = 30, units = c("cm"))
 
-###########
-#####
+############################################
+
+# Values for paper text
+
 # impact in children 0-3 months : maternal
 
 x <- dat %>%
